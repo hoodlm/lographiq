@@ -1,0 +1,13 @@
+#! /usr/bin/ruby
+
+$LOAD_PATH << "#{File.dirname(__FILE__)}/.."
+
+options = {}
+options[:infile] = ARGV[0]
+
+$stderr.puts "Generating image from #{options[:infile]}"
+
+image = eval(File.read(options[:infile]))
+
+# TODO support outfiles instead of printing to stdout
+puts image.render_as_ppm
