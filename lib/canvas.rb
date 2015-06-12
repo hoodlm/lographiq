@@ -21,6 +21,7 @@ class Canvas
   PPM_ROW_DELIMITER = "\n"
   attr_reader :width, :height
   def initialize(width, height, background_color = RGB.black)
+    $stderr.puts "Initializing canvas: size = #{width}x#{height}"
     @width = width
     @height = height
 
@@ -31,6 +32,7 @@ class Canvas
         row[column] = RGB.clone(background_color)
       end
     end
+    $stderr.puts "Done initializing canvas"
   end
 
   def set_pixel(r, g, b, x, y)
