@@ -7,6 +7,10 @@ class RGB < OpenStruct
     RGB.new(0, 0, 0)
   end
 
+  def self.white
+    RGB.new(255, 255, 255)
+  end
+
   def initialize(r = 0, g = 0, b = 0)
     super(r: r, g: g, b: b)
   end
