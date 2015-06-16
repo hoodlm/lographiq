@@ -58,6 +58,7 @@ class Canvas
     # Boilerplate header.
     header = "P3\n#{@width} #{@height}\n255\n"
     @pixels.each_with_index do |value, index|
+      $stderr.puts "#{Time.now} #{100.0 * index.to_f / @pixels.length.to_f}%" if (index % 500000 == 0)
       header << value.to_s
       if (index + 1) % (@width * 3) == 0
         header << PPM_ROW_DELIMITER
