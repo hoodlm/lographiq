@@ -1,5 +1,5 @@
 require 'lib/canvas'
 
-WIDTH = 3
-HEIGHT= 6
+WIDTH = 1920
+HEIGHT= 1080
 Canvas.new(WIDTH, HEIGHT)
