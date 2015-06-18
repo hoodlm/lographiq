@@ -39,9 +39,9 @@ class RandomPath < Drawable
     values
   end
 
-  def apply_to(canvas)
+  def apply_to(canvas, draw_args = {})
     points_along_path().each do |point|
-      canvas.set_pixel(@color, point[0].floor, point[1].floor)
+      draw_pixel(canvas, @color, point[0], point[1], draw_args)
     end
     super
   end

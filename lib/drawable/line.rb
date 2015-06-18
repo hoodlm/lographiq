@@ -13,9 +13,9 @@ class Line < Drawable
     @color = color
   end
 
-  def apply_to(canvas)
+  def apply_to(canvas, draw_options = {})
     points_along_line().each do |point|
-      canvas.set_pixel(@color, point[0].floor, point[1].floor)
+      draw_pixel(canvas, @color, point[0], point[1], draw_options)
     end
     super
   end

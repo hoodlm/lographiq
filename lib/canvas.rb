@@ -59,7 +59,7 @@ class Canvas
     header = "P3\n#{@width} #{@height}\n255\n"
     @pixels.each_with_index do |value, index|
       $stderr.puts "#{Time.now} #{100.0 * index.to_f / @pixels.length.to_f}%" if (index % 500000 == 0)
-      header << value.to_s
+      header << value.to_i.to_s
       if (index + 1) % (@width * 3) == 0
         header << PPM_ROW_DELIMITER
       else
@@ -74,6 +74,9 @@ class Canvas
   # Returns the index of the R component of a pixel, given an X,Y coordinate.
   # The B and G components will be at the return value +1 and +2.
   def index_of_pixel(x, y)
+    # "Swallow" out of bounds by just wrapping around
+    x = x % @width
+    y = y % @height
     y * (@width * 3) + 3 * x
   end
 end
