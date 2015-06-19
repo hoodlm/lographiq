@@ -1,17 +1,18 @@
 require 'lib/drawable/drawable'
+require 'lib/drawable/draw_helpers'
 
 class RandomPath < Drawable
+  include DrawHelpers
 
-  INV_SQRT_TWO = (1.0 / Math.sqrt(2))
   UNIFORM_DISTRIBUTION = {
     [0, 1]=> 1,
     [0, -1]=> 1,
     [1, 0]=> 1,
     [-1, 0]=> 1,
-    [INV_SQRT_TWO, INV_SQRT_TWO]=> 1,
-    [INV_SQRT_TWO, -INV_SQRT_TWO]=> 1,
-    [-INV_SQRT_TWO, INV_SQRT_TWO]=> 1,
-    [-INV_SQRT_TWO, -INV_SQRT_TWO]=> 1,
+    [1, 1]=> 1,
+    [1, -1]=> 1,
+    [-1, 1]=> 1,
+    [-1, -1]=> 1,
   }
 
   attr_reader :origin_x, :origin_y, :length, :color, :distribution
@@ -32,6 +33,7 @@ class RandomPath < Drawable
   def process_distribution(distr)
     values = []
     distr.each_pair do |value, count|
+      value = to_unit_vector(value[0], value[1])
       count.times do
         values << value
       end
