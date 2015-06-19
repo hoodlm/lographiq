@@ -1,10 +1,10 @@
 require 'lib/canvas'
 require 'lib/drawable/random_path'
 
-SEED = 40030
+SEED = 40031
 WIDTH = 1920 * 2
 HEIGHT= 1080 * 2
-N_PATHS = 10000
+N_PATHS = 20000
 PATH_LENGTH = 4000
 BACKGROUND = RGB.new(63, 72, 84)
 COLORS = [

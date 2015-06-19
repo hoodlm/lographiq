@@ -11,9 +11,12 @@ class Drawable
   #      :overwrite - (DEFAULT) Cover up the pixel's current color with the new color. Ignores weight.
   #      :average   - Blend together with the pixel's current color by averaging with current color.
   #                   (Degree of blending is determined by 'weight' - defaults to 0.50, an equal mix.)
+  #      :random    - Randomizes RGB elements, bounded between current color and new color. Ignores weight.
   #   - weight
   #      Between 0.00 and 1.00. Depends on the blend_mode, but in general controls the degree
   #      to which this pixel will be altered.
+  #   - rng
+  #      Used for non-deterministic blending methods.
   def draw_pixel(canvas, color, x, y, options = {})
     mode = options.fetch(:blend_mode, :overwrite)
     weight = options.fetch(:weight, 0.50)
@@ -31,8 +34,18 @@ class Drawable
       b = (current_color.b.to_f * inv_weight + color.b.to_f * weight) * 0.5
       new_color = RGB.new(r, g, b)
       canvas.set_pixel(new_color, x, y)
+    when :random
+      rng = options.fetch(:rng, Random.new())
+      current_color = canvas.get_pixel(x, y)
+      new_rgb = [:r, :g, :b].map do |comp|
+        bounds = [current_color.send(comp), color.send(comp)].sort
+        rng.rand(Range.new(bounds[0], bounds[1])).tap do |new_comp|
+          # $stderr.puts("Randomly between #{current_color.send(comp)} and #{color.send(comp)} -> #{new_comp}")
+        end
+      end
+      canvas.set_pixel(RGB.new(new_rgb[0], new_rgb[1], new_rgb[2]), x, y)
     else
-      fail "unknown blend mode #{mode}. Supported values are :overwrite or :average"
+      fail "unknown blend mode #{mode}."
     end
   end
 end
