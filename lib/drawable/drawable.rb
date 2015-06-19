@@ -29,9 +29,9 @@ class Drawable
     when :average
       current_color = canvas.get_pixel(x, y)
       inv_weight = 1.00 - weight
-      r = (current_color.r.to_f * inv_weight + color.r.to_f * weight) * 0.5
-      g = (current_color.g.to_f * inv_weight + color.g.to_f * weight) * 0.5
-      b = (current_color.b.to_f * inv_weight + color.b.to_f * weight) * 0.5
+      r, g, b = [:r, :g, :b].map do |comp|
+        (current_color.send(comp).to_f * inv_weight + color.send(comp).to_f * weight) * 0.5
+      end
       new_color = RGB.new(r, g, b)
       canvas.set_pixel(new_color, x, y)
     when :random
