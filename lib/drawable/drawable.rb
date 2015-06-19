@@ -39,9 +39,7 @@ class Drawable
       current_color = canvas.get_pixel(x, y)
       new_rgb = [:r, :g, :b].map do |comp|
         bounds = [current_color.send(comp), color.send(comp)].sort
-        rng.rand(Range.new(bounds[0], bounds[1])).tap do |new_comp|
-          # $stderr.puts("Randomly between #{current_color.send(comp)} and #{color.send(comp)} -> #{new_comp}")
-        end
+        rng.rand(Range.new(bounds[0], bounds[1]))
       end
       canvas.set_pixel(RGB.new(new_rgb[0], new_rgb[1], new_rgb[2]), x, y)
     else
