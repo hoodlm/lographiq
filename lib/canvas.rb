@@ -12,6 +12,10 @@ class RGB < OpenStruct
   end
 
   def initialize(r = 0, g = 0, b = 0)
+    r, g, b = [r, g, b].map do |comp|
+      # clamp between 0 and 255
+      [[0, comp].max, 255].min
+    end
     super(r: r, g: g, b: b)
   end
 end
